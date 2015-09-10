@@ -32,6 +32,7 @@
 #lecciones  { width: 100%; position:absolute; top:0px }
 #categorias  { width: 100%; position:absolute; top:0px }
 #ajustes  { width: 100%; position:absolute; top:120px }
+#ajustestext  { width: 100% ; padding: 0.5em 0; text-align:center }
 #pie  { width: 100%; clear: both; padding: 0.5em 0}
 
 #bsalir  {position:absolute; top:550px; left:60px;}
@@ -81,6 +82,8 @@ body {
 		<audio id="horse" src="sonidos\horse.mp3"></audio>
 		<audio id="cat" src="sonidos\cat.mp3"></audio>
     <audio id="fish" src="sonidos\fish.mp3"></audio>
+    <audio id="soundcorrecto" src="sonidos\correcto.mp3"></audio>
+    <audio id="soundincorrecto" src="sonidos\incorrecto.mp3"></audio>
 
 		<div id="correcto"> </div><br><br>
 		<div id="incorrecto"> </div><br><br>
@@ -489,7 +492,7 @@ body {
 
 		<!-- pagina contactarnos IU-017 -->
 		<div id="contacto" style= "visibility:hidden">
-			<h2 style="position: absolute; top:60px; left:105px"> Contáctanos </h2>
+			<div id="cabecera2"><h2> Contáctanos </h2></div>
 
       <div id="img" style="position: absolute; top:150px; left:45px"> <img src="img\email.png" width="40px"></div>
 			<h4 style="position: absolute; top:150px; left:95px"> inyoin@gametive.com.ar </h4>
@@ -513,12 +516,12 @@ body {
 
 	  <!-- pagina acerca de IU-018 -->
 		<div id="acerca" style= "visibility:hidden">
-			<h1 style="position: absolute; top:100px; left:125px"> INYOIN </h1>
-				  <h4 style="position: absolute; top:180px; left:105px"> Version 1.0.0</h4>
-          <h4 style="position: absolute; top:240px; left:105px"> Obtendida el 25/11/15</h4>
-          <h4 style="position: absolute; top:300px; left:105px"> DESARROLLADO POR  </h4>
+				<div id="cabecera2"><h1> INYOIN </h1></div>
+          <div id="ajustestext" style="position: absolute; top:180px"><h4> Version 1.0.0</h4></div>
+          <div id="ajustestext" style="position: absolute; top:240px"><h4> Obtenida el 25/11/15</h4></div>
+          <div id="ajustestext" style="position: absolute; top:300px"><h4> DESARROLLADO POR  </h4></div>
 
-			<div id="img" style="position: absolute; top:350px; left:125px"> <img src="img\gametive.png" height="125px" width="100px">
+			<div id="img" style="position: absolute; top:350px; left:125px"> <img src="img\gametive.png" height="120px" width="90px">
 			</div>
 
       <div id="bderecha">
@@ -543,12 +546,14 @@ function validacionNivelCero(button){
 		if(button != 2){
       document.getElementById("incorrecto").innerHTML='Intentalo de nuevo';
       document.getElementById("img01").style.border="outset red";
+      musicplay("soundincorrecto");
       if (button==1){
           document.getElementById("b01").style.border="outset red";
       }else{
           document.getElementById("b03").style.border="outset red";
         }
     }else{
+      musicplay("soundcorrecto");
       document.getElementById("correcto").innerHTML='¡Muy bien!';
       document.getElementById("b02").style.border="outset green";
       document.getElementById("img01").style.border="solid green";
@@ -560,15 +565,17 @@ function validacionNivelUno(button){
   if(button != 3){
     document.getElementById("incorrecto").innerHTML='Intentalo de nuevo';
     document.getElementById("b11").style.border="outset red";
+    musicplay("soundincorrecto");
     if (button==2){
         document.getElementById("img12").style.border="outset red";
     }else{
         document.getElementById("img11").style.border="outset red";
       }
   }else{
-    document.getElementById("correcto").innerHTML='¡Muy bien!';
-    document.getElementById("b11").style.border="outset green";
-    document.getElementById("img13").style.border="solid green";
+      musicplay("soundcorrecto");
+      document.getElementById("correcto").innerHTML='¡Muy bien!';
+      document.getElementById("b11").style.border="outset green";
+      document.getElementById("img13").style.border="solid green";
       }
   }
 
@@ -578,7 +585,9 @@ function validacionNivelDos(button){
     document.getElementById("incorrecto").innerHTML='Intentalo de nuevo';
     document.getElementById("img21").style.border="outset red";
     document.getElementById("b21").style.border="outset red";
+    musicplay("soundincorrecto");
   }else {
+      musicplay("soundcorrecto");
       document.getElementById("img21").style.border="outset green";
       document.getElementById("correcto").innerHTML='¡Muy bien!';
       if(button == 2){
@@ -598,16 +607,18 @@ function validacionNivelCuatro(button){
     if(button != 1){
       document.getElementById("frase").innerHTML='THE CAT IS ___ THE TABLE';
       document.getElementById("incorrecto").innerHTML='Intentalo de nuevo';
+      musicplay("soundincorrecto");
         if (button==2){
             document.getElementById("b42").style.border="outset red";
         }else{
             document.getElementById("b43").style.border="outset red";
         }
       }else{
-      document.getElementById("correcto").innerHTML='¡Muy bien!';
-      document.getElementById("frase").innerHTML='';
-      document.getElementById("frase").innerHTML='THE CAT IS ON THE TABLE';
-      document.getElementById("b41").style.border="outset green";
+        musicplay("soundcorrecto");
+        document.getElementById("correcto").innerHTML='¡Muy bien!';
+        document.getElementById("frase").innerHTML='';
+        document.getElementById("frase").innerHTML='THE CAT IS ON THE TABLE';
+        document.getElementById("b41").style.border="outset green";
     }
   }
 
