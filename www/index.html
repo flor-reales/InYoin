@@ -78,6 +78,8 @@ body {
     <ion-pane>
       <ion-content>
 
+    <audio id="audioAprender" src="sonidos\horse.mp3"></audio>
+
 	  <audio id="dog" src="sonidos\dog.mp3"></audio>
 		<audio id="horse" src="sonidos\horse.mp3"></audio>
 		<audio id="cat" src="sonidos\cat.mp3"></audio>
@@ -341,14 +343,14 @@ body {
 
 		  <div id="imgcenterunique"><img id=img01 src="img\caballo.png" width="150px"></div>
 
-		  <div id="brta1">
-			<button id=b01 class="button  button-energized" onclick="validacionNivelCero(1)">   DOG  </button>
+      <div id="brta1">
+			<button id=b01 class="button  button-energized" onclick="validacionNivelCero('b01')" value="DOG">   DOG  </button>
 		  </div>
 		  <div id="brta2">
-			<button id=b02 class="button  button-energized" onclick="validacionNivelCero(2)">  HORSE </button>
+			<button id=b02 class="button  button-energized" onclick="validacionNivelCero('b02')" value="HORSE">  HORSE </button>
 		  </div>
 		  <div id="brta3">
-			<button id=b03 class="button  button-energized" onclick="validacionNivelCero(3)">  CAT   </button>
+			<button id=b03 class="button  button-energized" onclick="validacionNivelCero('b03')" value="CAT">  CAT   </button>
 		  </div>
 
       <div id="bplay1">
@@ -465,20 +467,20 @@ body {
 		<!-- catalogo nivel 0-->
 		<div id="catalogo0" style= "visibility:hidden">
 
-	    <div id="imgaprender"> <img src="img\caballo.png" width="150px"></div>
+	    <div id="imgaprender"> <img id=imgap src="img\caballo.png" width="150px"></div>
 
 			<div style="position: absolute; top:400px; left:100px"
-				<button class="button  button-energized" >   HORSE  </button>
+				<button id=bapIngles class="button  button-energized" >   HORSE  </button>
 			</div>
 			<div style="position: absolute; top:400px; left:200px">
-				<button class="button  button-energized" >  CABALLO </button>
+				<button id=bapEspaniol class="button  button-energized" >  CABALLO </button>
 			</div>
-			<div style="position: absolute; top:250px; left:300px">
+			<div style="position: absolute; top:250px; left:300px" onclick="siguienteItem()">
 				<button style="background:#B6E0FA;border:#B6E0FA 1px solid;font-size:210%; font-weight: bold;"> >  </button>
 			</div>
 
 			<div style="position: absolute; top:460px; left:100px">
-				<button  onclick="musicplay('horse')" style="background:#605F5F">  <img src="img\play.jpg" width="40px" height="40px"> </button>
+				<button  onclick="musicplay('audioAprender')" style="background:#605F5F">  <img src="img\play.jpg" width="40px" height="40px"> </button>
 			</div>
 
 
@@ -537,25 +539,28 @@ body {
 </ion-content>
     <script type="text/javascript">
 
+    rtaNivel23 = new Array(3);
+    var rta = new String;
+
 function musicplay(button){
 			document.getElementById(button).play();
 	  }
 
 function validacionNivelCero(button){
     borrar();
-		if(button != 2){
+    rta='HORSE'; //Cuando se carga el ejercicio se cargara esta rta, asi que esta  linea se debe borrar
+    var rtaUsuario = document.getElementById(button).value;
+    var n =rtaUsuario.localeCompare(rta);
+
+		if( n!=0 ){
+      musicplay("soundincorrecto");
       document.getElementById("incorrecto").innerHTML='Intentalo de nuevo';
       document.getElementById("img01").style.border="outset red";
-      musicplay("soundincorrecto");
-      if (button==1){
-          document.getElementById("b01").style.border="outset red";
-      }else{
-          document.getElementById("b03").style.border="outset red";
-        }
+      document.getElementById(button).style.border="outset red";
     }else{
       musicplay("soundcorrecto");
       document.getElementById("correcto").innerHTML='¡Muy bien!';
-      document.getElementById("b02").style.border="outset green";
+      document.getElementById(button).style.border="outset green";
       document.getElementById("img01").style.border="solid green";
   }
  }
@@ -647,6 +652,14 @@ function silenciar(){
   }
   }
 
+function siguienteItem(){
+
+  document.getElementById('bapIngles').textContent='CAT';
+  document.getElementById('bapEspaniol').textContent='GATO';
+  document.getElementById("imgap").src="img/gato.jpg";
+  document.getElementById("audioAprender").src="sonidos/cat.mp3";
+
+}
 
 
     </script>
