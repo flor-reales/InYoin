@@ -379,12 +379,12 @@ body {
       </div>
 
       <div id="bnivelUno">
-      <button id=b11 class="button  button-energized" style="border: 3px solid;" >  FISH </button>
+      <button id=b11 class="button  button-energized" style="border: 3px solid;" > FISH </button>
       </div>
 
-      <div id="brta1"><img id=img11 src="img\ABEJA.jpg"  width="100px" height="100px" onclick="validacionNivelUno(1)"></div>
-      <div id="brta2"><img id=img12 src="img\ARANIA.jpg"  width="100px" height="100px" onclick="validacionNivelUno(2)"></div>
-      <div id="brta3"><img id=img13 src="img\PEZ.jpg"  width="100px" height="100px" onclick="validacionNivelUno(3)"></div>
+      <div id="brta1"><img id="img11" src="img\ABEJA.jpg"  width="100px" height="100px" onclick="validacionNivelUno('img11')" alt="BEE"></div>
+      <div id="brta2"><img id="img12" src="img\ARANIA.jpg"  width="100px" height="100px" onclick="validacionNivelUno('img12')" alt="SPIDER"></div>
+      <div id="brta3"><img id="img13" src="img\PEZ.jpg"  width="100px" height="100px" onclick="validacionNivelUno('img13')" alt="FISH"></div>
 
       <div id="bderecha">
           <button  onclick="mostrarborrar('principal','nivel1')"style="border:#B6E0FA 1px solid;background:#B6E0FA; ">
@@ -567,20 +567,20 @@ function validacionNivelCero(button){
 
 function validacionNivelUno(button){
   borrar();
-  if(button != 3){
+  rta='FISH';//Cuando se carga el ejercicio se cargara esta rta, asi que esta  linea se debe borrar
+  var rtaUsuario2 = document.getElementById(button).alt;
+  var n =rtaUsuario2.localeCompare(rta);
+
+  if( n != 0 ){
+    musicplay("soundincorrecto");
     document.getElementById("incorrecto").innerHTML='Intentalo de nuevo';
     document.getElementById("b11").style.border="outset red";
-    musicplay("soundincorrecto");
-    if (button==2){
-        document.getElementById("img12").style.border="outset red";
-    }else{
-        document.getElementById("img11").style.border="outset red";
-      }
+    document.getElementById(button).style.border="outset red";
   }else{
       musicplay("soundcorrecto");
       document.getElementById("correcto").innerHTML='¡Muy bien!';
       document.getElementById("b11").style.border="outset green";
-      document.getElementById("img13").style.border="solid green";
+      document.getElementById(button).style.border="solid green";
       }
   }
 
