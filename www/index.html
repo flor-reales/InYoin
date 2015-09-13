@@ -11,7 +11,6 @@
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
     -->
-    <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
 
@@ -105,12 +104,12 @@ body {
 			</div>
 
 			<div id="bsalir">
-          <button  ng-click="exit()"   style="border:#B6E0FA 1px solid;background:#B6E0FA;">
+          <button  ng-click="exit()"   style="border:transparent 1px solid;background:transparent;">
           <img src="img\salir.png" width="45px" height="45px"></button>
     	</div>
 
     	<div id="bderecha">
-		    	<button  onclick="mostrar('ajuste','principal')"style="border:#B6E0FA 1px solid;background:#B6E0FA; ">
+		    	<button  onclick="mostrar('ajuste','principal')"style="border:transparent 1px solid;background:transparent; ">
 				<img src="img\ajustes.jpg" width="45px" height="45px"></button>
 			</div>
 
@@ -379,7 +378,7 @@ body {
       </div>
 
       <div id="bnivelUno">
-      <button id=b11 class="button  button-energized" style="border: 3px solid;" > FISH </button>
+      <button id=b11 class="button  button-energized" style="border: 3px solid transparent;" > FISH </button>
       </div>
 
       <div id="brta1"><img id="img11" src="img\ABEJA.jpg"  width="100px" height="100px" onclick="validacionNivelUno('img11')" alt="BEE"></div>
@@ -400,13 +399,13 @@ body {
 
 
 		  <div id="brta1">
-			<button id=b21 class="button  button-energized" onclick="validacionNivelDos(1)">   APPLE  </button>
+			<button id=b21 class="button  button-energized" onclick="validacionNivelDos('b21')" value="APPLE">   APPLE  </button>
 		  </div>
 		  <div id="brta2">
-			<button id=b22 class="button  button-energized" onclick="validacionNivelDos(2)" >  YELLOW </button>
+			<button id=b22 class="button  button-energized" onclick="validacionNivelDos('b22')" value="YELLOW">  YELLOW </button>
 		  </div>
 		  <div id="brta3">
-			<button id=b23 class="button  button-energized"onclick="validacionNivelDos(3)" >  LEMON  </button>
+			<button id=b23 class="button  button-energized"onclick="validacionNivelDos('b23')" value="LEMON" >  LEMON  </button>
 		  </div>
 
       <div id="bderecha">
@@ -541,6 +540,8 @@ body {
 
     rtaNivel23 = new Array(3);
     var rta = new String;
+    var rtaIncorrecta = new String;
+    var flag = 0; //Se inicializara en cero cada vez que se cargue un itme del nivel 2
 
 function musicplay(button){
 			document.getElementById(button).play();
@@ -557,11 +558,13 @@ function validacionNivelCero(button){
       document.getElementById("incorrecto").innerHTML='Intentalo de nuevo';
       document.getElementById("img01").style.border="outset red";
       document.getElementById(button).style.border="outset red";
-    }else{
+      //      window.setTimeout(function(){document.getElementById("img01").style.border="transparent";},3000);
+     }else{
       musicplay("soundcorrecto");
       document.getElementById("correcto").innerHTML='¡Muy bien!';
       document.getElementById(button).style.border="outset green";
       document.getElementById("img01").style.border="solid green";
+      window.setTimeout("alert('Siguiente Item')",2000);
   }
  }
 
@@ -580,26 +583,29 @@ function validacionNivelUno(button){
       musicplay("soundcorrecto");
       document.getElementById("correcto").innerHTML='¡Muy bien!';
       document.getElementById("b11").style.border="outset green";
-      document.getElementById(button).style.border="solid green";
+      document.getElementById(button).style.border="outset green";
+      window.setTimeout("alert('Siguiente Item')",2000);
       }
   }
 
 function validacionNivelDos(button){
   borrar();
-  if(button == 1){
+  rtaIncorrecta='APPLE'; //Cuando se carga el ejercicio se cargara esta rta, asi que esta  linea se debe borrar
+  var rtaUsuario = document.getElementById(button).value;
+  var n =rtaUsuario.localeCompare(rtaIncorrecta);
+
+  if( n == 0 ){
+    musicplay("soundincorrecto");
     document.getElementById("incorrecto").innerHTML='Intentalo de nuevo';
     document.getElementById("img21").style.border="outset red";
-    document.getElementById("b21").style.border="outset red";
-    musicplay("soundincorrecto");
-  }else {
-      musicplay("soundcorrecto");
-      document.getElementById("img21").style.border="outset green";
-      document.getElementById("correcto").innerHTML='¡Muy bien!';
-      if(button == 2){
-        document.getElementById("b22").style.border="outset green";
-      }else{
-        document.getElementById("b23").style.border="outset green";
-    }
+    document.getElementById(button).style.border="outset red";
+  }else{
+    musicplay("soundcorrecto");
+    document.getElementById("correcto").innerHTML='¡Muy bien!';
+    document.getElementById(button).style.border="outset green";
+    document.getElementById("img21").style.border="solid green";
+    flag++;
+    if(flag>1){ window.setTimeout("alert('Siguiente Item')",2000);}
   }
 }
 
