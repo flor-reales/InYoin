@@ -381,9 +381,9 @@ body {
       <button id=b11 class="button  button-energized" style="border: 3px solid transparent;" > FISH </button>
       </div>
 
-      <div id="brta1"><img id="img11" src="img\ABEJA.jpg"  width="100px" height="100px" onclick="validacionNivelUno('img11')" alt="BEE"></div>
-      <div id="brta2"><img id="img12" src="img\ARANIA.jpg"  width="100px" height="100px" onclick="validacionNivelUno('img12')" alt="SPIDER"></div>
-      <div id="brta3"><img id="img13" src="img\PEZ.jpg"  width="100px" height="100px" onclick="validacionNivelUno('img13')" alt="FISH"></div>
+      <div id="brta1"><img id="img11" src="img\ABEJA.jpg"  width="100px" height="100px" onclick="validacionNivelUno('img11'); this.onclick = ''" alt="BEE"></div>
+      <div id="brta2"><img id="img12" src="img\ARANIA.jpg"  width="100px" height="100px" onclick="validacionNivelUno('img12'); this.onclick = ''" alt="SPIDER"></div>
+      <div id="brta3"><img id="img13" src="img\PEZ.jpg"  width="100px" height="100px" onclick="validacionNivelUno('img13'); this.onclick = ''" alt="FISH"></div>
 
       <div id="bderecha">
           <button  onclick="mostrarborrar('principal','nivel1')"style="border:#B6E0FA 1px solid;background:#B6E0FA; ">
@@ -418,22 +418,22 @@ body {
     <!-- nivel 3-->
     <div id="nivel3" style= "visibility:hidden">
 
-      <div id="imgleft"  > <img src="img\caballo.png" width="100px" height="100px"></div>
-      <div id="imgcenter"> <img src="img\gato.jpg" width="100px" height="100px"></div>
-      <div id="imgright" > <img src="img\perro.jpg" width="100px" height="100px"></div>
+      <div id="imgleft"  > <img id="img31" src="img\caballo.png" width="100px" height="100px" style="border:blue 3px outset;"></div>
+      <div id="imgcenter"> <img id="img32" src="img\gato.jpg" width="100px" height="100px"></div>
+      <div id="imgright" > <img id="img33" src="img\perro.jpg" width="100px" height="100px"></div>
 
       <div id="brta1">
-      <button id=b31 class="button  button-energized" onclick="validacionNivelTres(1)">   DOG  </button>
+      <button id=b31 class="button  button-energized" onclick="validacionNivelTres('b31')" value="DOG">   DOG  </button>
       </div>
       <div id="brta2">
-      <button id=b32 class="button  button-energized" onclick="validacionNivelTres(2)">  HORSE </button>
+      <button id=b32 class="button  button-energized" onclick="validacionNivelTres('b32')" value="HORSE">  HORSE </button>
       </div>
       <div id="brta3">
-      <button id=b33 class="button  button-energized" onclick="validacionNivelTres(3)" >  CAT   </button>
+      <button id=b33 class="button  button-energized" onclick="validacionNivelTres('b33')" value="CAT">  CAT   </button>
       </div>
 
       <div id="bderecha">
-          <button  onclick="mostrarborrar('principal','nivel3')"style="border:#B6E0FA 1px solid;background:#B6E0FA; ">
+          <button  onclick="mostrarborrar('principal','nivel3')"style="border:transparent 1px solid;background:transparent; ">
           <img src="img\home.jpg" width="45px" height="45px"></button>
       </div>
 
@@ -442,22 +442,22 @@ body {
     <!-- nivel 4-->
     <div id="nivel4" style= "visibility:hidden">
 
-      <div id="imgcenterunique"> <img src="img\gatosobremesa.jpg" width="120px"></div>
+      <div id="imgcenterunique"> <img id="img41" src="img\gatosobremesa.jpg" width="120px"></div>
 
       <div id="frase"> THE CAT IS ___ THE TABLE </div>
 
       <div id="brta1">
-      <button id=b41 class="button  button-energized" onclick="validacionNivelCuatro(1)">   ON  </button>
+      <button id=b41 class="button  button-energized" onclick="validacionNivelCuatro('b41')" value="ON">   ON  </button>
       </div>
       <div id="brta2">
-      <button id=b42 class="button  button-energized" onclick="validacionNivelCuatro(2)">  IN </button>
+      <button id=b42 class="button  button-energized" onclick="validacionNivelCuatro('b42')" value="IN">  IN </button>
       </div>
       <div id="brta3">
-      <button id=b43 class="button button-energized"  onclick="validacionNivelCuatro(3)">  UNDER  </button>
+      <button id=b43 class="button button-energized"  onclick="validacionNivelCuatro('b43')" value="UNDER">  UNDER  </button>
       </div>
 
       <div id="bderecha">
-        <button  onclick="mostrarborrar('principal','nivel4')"style="border:#B6E0FA 1px solid;background:#B6E0FA; ">
+        <button  onclick="mostrarborrar('principal','nivel4')"style="border:transparent 1px solid;background:transparent; ">
       <img src="img\home.jpg" width="45px" height="45px"></button>
       </div>
 
@@ -539,9 +539,11 @@ body {
     <script type="text/javascript">
 
     rtaNivel23 = new Array(3);
+    rtaSeleccionada = new Array(3);
     var rta = new String;
     var rtaIncorrecta = new String;
-    var flag = 0; //Se inicializara en cero cada vez que se cargue un itme del nivel 2
+    var flag = 0; //Se inicializara en cero cada vez que se cargue un item del nivel 2
+    var flag4= 0; //Se inicializara en cero cada vez que se cargue un item del nivel 4
 
 function musicplay(button){
 			document.getElementById(button).play();
@@ -558,12 +560,12 @@ function validacionNivelCero(button){
       document.getElementById("incorrecto").innerHTML='Intentalo de nuevo';
       document.getElementById("img01").style.border="outset red";
       document.getElementById(button).style.border="outset red";
-      //      window.setTimeout(function(){document.getElementById("img01").style.border="transparent";},3000);
+      document.getElementById(button).disabled='disabled';
      }else{
       musicplay("soundcorrecto");
       document.getElementById("correcto").innerHTML='¡Muy bien!';
       document.getElementById(button).style.border="outset green";
-      document.getElementById("img01").style.border="solid green";
+      document.getElementById("img01").style.border="outset green";
       window.setTimeout("alert('Siguiente Item')",2000);
   }
  }
@@ -579,6 +581,7 @@ function validacionNivelUno(button){
     document.getElementById("incorrecto").innerHTML='Intentalo de nuevo';
     document.getElementById("b11").style.border="outset red";
     document.getElementById(button).style.border="outset red";
+    document.getElementById(button).disabled=true;
   }else{
       musicplay("soundcorrecto");
       document.getElementById("correcto").innerHTML='¡Muy bien!';
@@ -603,7 +606,7 @@ function validacionNivelDos(button){
     musicplay("soundcorrecto");
     document.getElementById("correcto").innerHTML='¡Muy bien!';
     document.getElementById(button).style.border="outset green";
-    document.getElementById("img21").style.border="solid green";
+    document.getElementById("img21").style.border="outset green";
     flag++;
     if(flag>1){ window.setTimeout("alert('Siguiente Item')",2000);}
   }
@@ -611,27 +614,56 @@ function validacionNivelDos(button){
 
 function validacionNivelTres(button){
   borrar();
+  seleccionNivel3(button);
 }
 
 function validacionNivelCuatro(button){
     borrar();
-    if(button != 1){
-      document.getElementById("frase").innerHTML='THE CAT IS ___ THE TABLE';
-      document.getElementById("incorrecto").innerHTML='Intentalo de nuevo';
+    var fraseCorrecta = 'THE CAT IS ON THE TABLE';
+    var fraseIncompleta = 'THE CAT IS ___ THE TABLE'
+    rta='ON'; //Cuando se carga el ejercicio se cargara esta rta, asi que esta  linea se debe borrar
+    var rtaUsuario = document.getElementById(button).value;
+    var n =rtaUsuario.localeCompare(rta);
+
+		if( n!=0 ){
       musicplay("soundincorrecto");
-        if (button==2){
-            document.getElementById("b42").style.border="outset red";
-        }else{
-            document.getElementById("b43").style.border="outset red";
-        }
-      }else{
-        musicplay("soundcorrecto");
-        document.getElementById("correcto").innerHTML='¡Muy bien!';
-        document.getElementById("frase").innerHTML='';
-        document.getElementById("frase").innerHTML='THE CAT IS ON THE TABLE';
-        document.getElementById("b41").style.border="outset green";
+      document.getElementById("incorrecto").innerHTML='Intentalo de nuevo';
+      document.getElementById("img41").style.border="outset red";
+      document.getElementById(button).style.border="outset red";
+      document.getElementById("frase").innerHTML=fraseIncompleta;
+      document.getElementById(button).disabled='disabled';
+     }else{
+      musicplay("soundcorrecto");
+      document.getElementById("correcto").innerHTML='¡Muy bien!';
+      document.getElementById(button).style.border="outset green";
+      document.getElementById("img41").style.border="outset green";
+      document.getElementById("frase").innerHTML=fraseCorrecta;
+      window.setTimeout("alert('Siguiente Item')",2000);
+    }
+}
+
+function seleccionNivel3(button) {
+
+  if(flag4 == 0){
+    document.getElementById(button).style.border="outset blue";
+    document.getElementById("img32").style.border="outset magenta";
+    document.getElementById(button).disabled='disabled';
+    rtaSeleccionada[1]=document.getElementById(button).value;
+    flag4++;
+  }else{
+    if(flag4 == 1){
+      document.getElementById(button).style.border="outset magenta";
+      document.getElementById("img33").style.border="outset OrangeRed";
+      document.getElementById(button).disabled='disabled';
+      rtaSeleccionada[2]=document.getElementById(button).value;
+      flag4++;
+    }else{
+      document.getElementById(button).style.border="outset OrangeRed";
+      document.getElementById(button).disabled='disabled';
+      rtaSeleccionada[3]=document.getElementById(button).value;
     }
   }
+}
 
 function mostrar(nivel,llamo){
     document.getElementById(llamo).style.visibility="hidden";
