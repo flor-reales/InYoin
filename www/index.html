@@ -538,12 +538,12 @@ body {
 </ion-content>
     <script type="text/javascript">
 
-    rtaNivel23 = new Array(3);
-    rtaSeleccionada = new Array(3);
+    rtaCorrecta = new Array(3);
     var rta = new String;
     var rtaIncorrecta = new String;
-    var flag = 0; //Se inicializara en cero cada vez que se cargue un item del nivel 2
-    var flag4= 0; //Se inicializara en cero cada vez que se cargue un item del nivel 4
+    var flag2 = 0; //Se inicializara en cero cada vez que se cargue un item del nivel 2
+    var flag4 = 0;  //Se inicializara en cero cada vez que se cargue un item del nivel 4
+    var flagCheck = 0; //Se inicializara en cero cada vez que se cargue un item del nivel 4
 
 function musicplay(button){
 			document.getElementById(button).play();
@@ -607,14 +607,92 @@ function validacionNivelDos(button){
     document.getElementById("correcto").innerHTML='¡Muy bien!';
     document.getElementById(button).style.border="outset green";
     document.getElementById("img21").style.border="outset green";
-    flag++;
-    if(flag>1){ window.setTimeout("alert('Siguiente Item')",2000);}
+    flag2++;
+    if(flag2>1){ window.setTimeout("alert('Siguiente Item')",2000);}
   }
 }
 
 function validacionNivelTres(button){
   borrar();
-  seleccionNivel3(button);
+  rtaCorrecta[1] = "HORSE";  //Cuando se carga el ejercicio se cargara esta rta, asi que esta  linea se debe borrar
+  rtaCorrecta[2] = "CAT"; //Cuando se carga el ejercicio se cargara esta rta, asi que esta  linea se debe borrar
+  rtaCorrecta[3] = "DOG";  //Cuando se carga el ejercicio se cargara esta rta, asi que esta  linea se debe borrar
+  var rtaSeleccionada;
+
+  if( flag4 == 8){
+    if (flagCheck == 2){
+      rtaSeleccionada = seleccionNivelTresSecundaria(button,flag,rtaCorrecta);
+    }else {
+      rtaSeleccionada = seleccionNivelTresSecundaria(button,flag,rtaCorrecta);
+      flag = rtaSeleccionada.flag;
+    }
+    flagCheck++;
+  }else{
+    rtaSeleccionada = seleccionNivelTresInicial(button);
+  }
+
+
+  if( flagCheck == 3 ){
+
+      var rtaUsuario = rtaSeleccionada.rta1;
+      var n1 =rtaUsuario.localeCompare(rtaCorrecta[1]);
+        if( n1 != 0){
+          document.getElementById("img31").style.border="outset red";
+          document.getElementById(rtaSeleccionada.brta1).style.border="outset red";
+          document.getElementById(rtaSeleccionada.brta1).disabled = false;
+        }else{
+          document.getElementById("img31").style.border="outset green";
+    //      document.getElementById(rtaSeleccionada.brta1).style.border="outset green";
+        }
+
+      rtaUsuario = rtaSeleccionada.rta2;
+      var n2 =rtaUsuario.localeCompare(rtaCorrecta[2]);
+       if( n2 != 0){
+         document.getElementById("img32").style.border="outset red";
+         document.getElementById(rtaSeleccionada.brta2).style.border="outset red";
+         document.getElementById(rtaSeleccionada.brta2).disabled = false;
+       }else{
+         document.getElementById("img32").style.border="outset green";
+    //     document.getElementById(rtaSeleccionada.brta2).style.border="outset green";
+       }
+
+       rtaUsuario = rtaSeleccionada.rta3;
+       var n3 =rtaUsuario.localeCompare(rtaCorrecta[3]);
+        if( n3 != 0){
+          document.getElementById("img33").style.border="outset red";
+          document.getElementById(rtaSeleccionada.brta3).style.border="outset red";
+          document.getElementById(rtaSeleccionada.brta3).disabled = false;
+        }else{
+          document.getElementById("img33").style.border="outset green";
+//          document.getElementById(rtaSeleccionada.brta3).style.border="outset green";
+  }
+
+  var e1 = Math.abs(n1);
+  var e2 = Math.abs(n2);
+  var e3 = Math.abs(n3);
+  var suma = e1 +  e2 + e3;
+
+       switch(suma) {
+       case 0:
+          musicplay("soundcorrecto");
+          document.getElementById("correcto").innerHTML='¡Muy bien!';
+          alert('Siguiente Item');
+          break;
+       case 2:
+          musicplay("soundincorrecto");
+          document.getElementById("incorrecto").innerHTML='Intentalo de nuevo';
+          window.setTimeout("borrar()",3000);
+          flag = seleccionDosErrores(e1,e2,e3);
+          flag4 = 8;
+          flagCheck = 1;
+          break;
+       default:
+          musicplay("soundincorrecto");
+          document.getElementById("incorrecto").innerHTML='Intentalo de nuevo';
+          window.setTimeout("activarBotones()",4000);
+          flagCheck = 0;
+     } //switch
+   }
 }
 
 function validacionNivelCuatro(button){
@@ -642,27 +720,119 @@ function validacionNivelCuatro(button){
     }
 }
 
-function seleccionNivel3(button) {
+function seleccionNivelTresInicial(button) {
 
-  if(flag4 == 0){
+  if(flagCheck == 0){
     document.getElementById(button).style.border="outset blue";
     document.getElementById("img32").style.border="outset magenta";
     document.getElementById(button).disabled='disabled';
-    rtaSeleccionada[1]=document.getElementById(button).value;
-    flag4++;
+    seleccion = {rta1:" ", brta1:" ", rta2:" ", brta2:" ", rta3:" ", brta3:" " };
+    seleccion.rta1 = document.getElementById(button).value;
+    seleccion.brta1 = button;
+    flagCheck++;
   }else{
-    if(flag4 == 1){
+    if(flagCheck == 1){
       document.getElementById(button).style.border="outset magenta";
       document.getElementById("img33").style.border="outset OrangeRed";
       document.getElementById(button).disabled='disabled';
-      rtaSeleccionada[2]=document.getElementById(button).value;
-      flag4++;
+      seleccion.rta2 = document.getElementById(button).value;
+      seleccion.brta2 = button;
+      flagCheck++;
     }else{
       document.getElementById(button).style.border="outset OrangeRed";
       document.getElementById(button).disabled='disabled';
-      rtaSeleccionada[3]=document.getElementById(button).value;
+      seleccion.rta3 = document.getElementById(button).value;
+      seleccion.brta3 = button;
+      flagCheck++;
     }
   }
+  return seleccion;
+}
+
+function seleccionNivelTresSecundaria(button, flag, rtaOk) {
+
+
+
+  switch (flag){
+    case 2:
+      document.getElementById(button).style.border="outset magenta";
+      document.getElementById(button).disabled='disabled';
+      seleccion.rta2 = document.getElementById(button).value;
+      seleccion.brta2 = button;
+      break;
+    case 21:
+      seleccion = {rta1:" ", brta1:" ", rta2:" ", brta2:" ", rta3:" ", brta3:" ",flag:0 };
+      document.getElementById(button).style.border="outset blue";
+      document.getElementById("img32").style.border="outset magenta";
+      document.getElementById(button).disabled='disabled';
+      seleccion.rta1 = document.getElementById(button).value;
+      seleccion.brta1 = button;
+      seleccion.rta3 = rtaOk[3];
+      seleccion.flag = 2;
+      break;
+    case 23:
+      seleccion = {rta1:" ", brta1:" ", rta2:" ", brta2:" ", rta3:" ", brta3:" ",flag:0 };
+      document.getElementById(button).style.border="outset blue";
+      document.getElementById("img33").style.border="outset magenta";
+      document.getElementById(button).disabled='disabled';
+      seleccion.rta2 = document.getElementById(button).value;
+      seleccion.brta2 = button;
+      seleccion.rta1 = rtaOk[1];
+      seleccion.flag = 11;
+      break;
+    case 31:
+      seleccion = {rta1:" ", brta1:" ", rta2:" ", brta2:" ", rta3:" ", brta3:" ",flag:0 };
+      document.getElementById(button).style.border="outset blue";
+      document.getElementById("img33").style.border="outset magenta";
+      document.getElementById(button).disabled='disabled';
+      seleccion.rta1 = document.getElementById(button).value;
+      seleccion.brta1 = button;
+      seleccion.rta2 = rtaOk[2];
+      seleccion.flag = 11;
+      break;
+    default:
+      document.getElementById(button).style.border="outset magenta";
+      document.getElementById(button).disabled='disabled';
+      seleccion.rta3 = document.getElementById(button).value;
+      seleccion.brta3 = button;
+    }
+
+  return seleccion;
+}
+
+function activarBotones(){
+     document.getElementById("img31").style.border="outset blue";
+     document.getElementById("img32").style.border="transparent";
+     document.getElementById("img33").style.border="transparent";
+     document.getElementById("b31").style.border="transparent";
+     document.getElementById("b32").style.border="transparent";
+     document.getElementById("b33").style.border="transparent";
+     borrar();
+}
+
+function seleccionDosErrores(error1,error2,error3){
+
+  rtasNuevas = 0;
+
+  document.getElementById("b31").style.border="transparent";
+  document.getElementById("b32").style.border="transparent";
+  document.getElementById("b33").style.border="transparent";
+
+  if(error1 == 1){
+     document.getElementById("img31").style.border="outset blue";
+     if (error3 == 1){
+           document.getElementById("img33").style.border="transparent";
+           rtasNuevas = 31;
+         }else {
+           document.getElementById("img32").style.border="transparent";
+           rtasNuevas = 21;
+         }
+  }else{
+      document.getElementById("img32").style.border="outset blue";
+      document.getElementById("img33").style.border="transparent";
+      rtasNuevas = 23;
+  }
+  return rtasNuevas;
 }
 
 function mostrar(nivel,llamo){
