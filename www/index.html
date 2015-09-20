@@ -22,8 +22,7 @@
 
 	<style type="text/css">
 
-
-* {padding:0 ; margin:0}
+#bg{position:absolute; top:0; left:0; z-index:-1;}
 #cabecera  { width: 100% ; padding: 0.5em 0; text-align:center; font-size:200%; font-weight: bold }
 #cabecera2  { width: 100%; padding: 0.5em 0; text-align:center; font-size:200%; position:absolute; top:50px}
 #contenido  { width: 100%; padding: 1%;float:left; }
@@ -60,25 +59,18 @@
 #correcto {width: 100%; padding: 0.5em 0; color:green; font-size:180%; text-align:center; font-weight: bold; position: absolute; top:330px}
 #incorrecto {width: 100%; padding: 0.5em 0; color:red; font-size:180%; text-align:center; font-weight: bold; position: absolute; top:330px}
 
-body {
-	#background:url(background.jpg) no-repeat center center fixed;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
-}
 
 </style>
 
 </head>
 
-<body  BACKGROUND="img/cielo.png"  ng-app="starter" ng-controller="AppExit">
+<body  ng-app="starter" ng-controller="AppExit">
 
     <ion-pane>
       <ion-content>
+      <img id="bg" src="img/cielo.png" alt="fondo" />
 
     <audio id="audioAprender" src="sonidos\horse.mp3"></audio>
-
 	  <audio id="dog" src="sonidos\dog.mp3"></audio>
 		<audio id="horse" src="sonidos\horse.mp3"></audio>
 		<audio id="cat" src="sonidos\cat.mp3"></audio>
@@ -538,6 +530,35 @@ body {
 </ion-content>
     <script type="text/javascript">
 
+
+    window.onload = function() {
+
+    	function bgadj(){
+
+    		var element = document.getElementById("bg");
+
+    		var ratio =  element.width / element.height;
+
+    		if ((window.innerWidth / window.innerHeight) < ratio){
+    			element.style.width = 'auto';
+  //  			element.style.height = '100%';
+    		}
+    		else{
+    			element.style.width = '100%';
+    			element.style.height = 'auto';
+   			  element.style.left = '0';
+    		}
+    	}
+  //llamo a la función bgadj() por primera vez al terminar de cargar la página
+    	bgadj();
+   //vuelvo a llamar a la función  bgadj() al redimensionar la ventana
+    	window.onresize = function() {
+    		bgadj();
+    	}
+    }
+
+
+    var silencio = 0;
     rtaCorrecta = new Array(3);
     var rta = new String;
     var rtaIncorrecta = new String;
@@ -851,13 +872,17 @@ function mostrarborrar(nivel,llamo){
 	}
 
 function silenciar(){
-    if(1){
-    alert("La aplicación fue silenciada, no escuchará los sonidos");
 
-  }else{
-    alert("Ahora puede escuchar sonidos");
+    if(silencio == 0){
 
-  }
+      alert("La aplicación fue silenciada, no escuchará los sonidos");
+      silencio = 1;
+    }else{
+
+
+      alert("Ahora puede escuchar sonidos");
+      silencio = 1;
+    }
   }
 
 function siguienteItem(){
