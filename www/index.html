@@ -70,13 +70,13 @@
       <ion-content>
       <img id="bg" src="img/cielo.png" alt="fondo" />
 
-    <audio id="audioAprender" src="sonidos\horse.mp3"></audio>
-	  <audio id="dog" src="sonidos\dog.mp3"></audio>
-		<audio id="horse" src="sonidos\horse.mp3"></audio>
-		<audio id="cat" src="sonidos\cat.mp3"></audio>
-    <audio id="fish" src="sonidos\fish.mp3"></audio>
-    <audio id="soundcorrecto" src="sonidos\correcto.mp3"></audio>
-    <audio id="soundincorrecto" src="sonidos\incorrecto.mp3"></audio>
+    <audio id="audioAprender" src="sonidos/horse.mp3"></audio>
+	  <audio id="s01" src="sonidos/dog.mp3"></audio>
+		<audio id="s02" src="sonidos/horse.mp3"></audio>
+		<audio id="s03" src="sonidos/cat.mp3"></audio>
+    <audio id="s11" src="sonidos/fish.mp3"></audio>
+    <audio id="soundcorrecto" src="sonidos/correcto.mp3"></audio>
+    <audio id="soundincorrecto" src="sonidos/incorrecto.mp3"></audio>
 
 		<div id="correcto"> </div><br><br>
 		<div id="incorrecto"> </div><br><br>
@@ -171,12 +171,12 @@
 				      <button  class="button button-full button-royal" onclick="mostrar('acerca','ajuste')" >  Acerca de </button>
         </div>
         <div id="bsalir">
-            <button  ng-click="exit()"   style="border:#B6E0FA 1px solid;background:#B6E0FA;">
+            <button  ng-click="exit()"   style="border:transparent 1px solid;background:transparent;">
             <img src="img\salir.png" width="45px" height="45px"></button>
         </div>
 
         <div id="bderecha">
-            <button  onclick="mostrar('principal','ajuste')"style="border:#B6E0FA 1px solid;background:#B6E0FA; ">
+            <button  onclick="mostrar('principal','ajuste')"style="border:transparent 1px solid;background:transparent; ">
           <img src="img\home.jpg" width="45px" height="45px"></button>
         </div>
     </div>
@@ -345,18 +345,18 @@
 		  </div>
 
       <div id="bplay1">
-			<button  onclick="musicplay('dog')" style="background:#605F5F">  <img src="img\play.jpg" width="40px" height="40px"> </button>
+			<button  id="p01" onclick="musicplay('s01')" style="background:#605F5F">  <img src="img\play.jpg" width="40px" height="40px"> </button>
 		  </div>
 		  <div id="bplay2">
-			<button  onclick="musicplay('horse')" style="background:#605F5F">  <img src="img\play.jpg" width="40px" height="40px"> </button>
+			<button  id="p02" onclick="musicplay('s02')" style="background:#605F5F">  <img src="img\play.jpg" width="40px" height="40px"> </button>
 		  </div>
 		  <div id="bplay3">
-			<button  onclick="musicplay('cat')" style="background:#605F5F">  <img src="img\play.jpg" width="40px" height="40px"> </button>
+			<button  id="p03" onclick="musicplay('s03')" style="background:#605F5F">  <img src="img\play.jpg" width="40px" height="40px"> </button>
 		  </div>
 
 
       <div id="bderecha">
-        <button  onclick="mostrarborrar('principal','nivel0')"style="border:#B6E0FA 1px solid;background:#B6E0FA; ">
+        <button  onclick="mostrarborrar('principal','nivel0')"style="border:transparent 1px solid;background:transparent; ">
       <img src="img\home.jpg" width="45px" height="45px"></button>
       </div>
 
@@ -366,7 +366,7 @@
     <div id="nivel1" style= "visibility:hidden">
 
       <div id="bplaycenter">
-      <button  onclick="musicplay('fish')" style="background:#605F5F">  <img src="img\play.jpg" width="40px" height="40px"> </button>
+      <button id="p11" onclick="musicplay('s11')" style="background:#605F5F">  <img src="img\play.jpg" width="40px" height="40px"> </button>
       </div>
 
       <div id="bnivelUno">
@@ -378,7 +378,7 @@
       <div id="brta3"><img id="img13" src="img\PEZ.jpg"  width="100px" height="100px" onclick="validacionNivelUno('img13'); this.onclick = ''" alt="FISH"></div>
 
       <div id="bderecha">
-          <button  onclick="mostrarborrar('principal','nivel1')"style="border:#B6E0FA 1px solid;background:#B6E0FA; ">
+          <button  onclick="mostrarborrar('principal','nivel1')"style="border:transparent 1px solid;background:transparent; ">
           <img src="img\home.jpg" width="45px" height="45px"></button>
       </div>
 
@@ -471,12 +471,12 @@
 			</div>
 
 			<div style="position: absolute; top:460px; left:100px">
-				<button  onclick="musicplay('audioAprender')" style="background:#605F5F">  <img src="img\play.jpg" width="40px" height="40px"> </button>
+				<button  id="paprender" onclick="musicplay('audioAprender')" style="background:#605F5F">  <img src="img\play.jpg" width="40px" height="40px"> </button>
 			</div>
 
 
       <div id="bderecha">
-          <button  onclick="mostrar('principal','catalogo0')"style="border:#B6E0FA 1px solid;background:#B6E0FA; ">
+          <button  onclick="mostrar('principal','catalogo0')"style="border:transparent 1px solid;background:transparent; ">
         <img src="img\home.jpg" width="45px" height="45px"></button>
       </div>
 
@@ -874,14 +874,29 @@ function mostrarborrar(nivel,llamo){
 function silenciar(){
 
     if(silencio == 0){
-
+      //Desactivo todos los botones play
+      document.getElementById('p01').disabled = 'disabled';
+      document.getElementById('p02').disabled = 'disabled';
+      document.getElementById('p03').disabled = 'disabled';
+      document.getElementById('p11').disabled = 'disabled';
+      document.getElementById('paprender').disabled = 'disabled';
+      //Borro src de sonidos correcto e incorrecto para que no se reproduzcan
+      document.getElementById("soundcorrecto").src=" ";
+      document.getElementById("soundincorrecto").src=" ";
       alert("La aplicación fue silenciada, no escuchará los sonidos");
       silencio = 1;
     }else{
-
-
+      //Activo todos los botones play
+      document.getElementById('p01').disabled = false;
+      document.getElementById('p02').disabled = false;
+      document.getElementById('p03').disabled = false;
+      document.getElementById('p11').disabled = false;
+      document.getElementById('paprender').disabled = false;
+      //Activo sonidos de correcto e incorrecto
+      document.getElementById("soundcorrecto").src="sonidos/correcto.mp3";
+      document.getElementById("soundincorrecto").src="sonidos/incorrecto.mp3";
       alert("Ahora puede escuchar sonidos");
-      silencio = 1;
+      silencio = 0;
     }
   }
 
