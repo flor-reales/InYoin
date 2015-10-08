@@ -62,7 +62,9 @@
 #correcto {width: 100%; padding: 0.5em 0; color:green; font-size:180%; text-align:center; font-weight: bold; position: absolute; top:330px}
 #incorrecto {width: 100%; padding: 0.5em 0; color:red; font-size:180%; text-align:center; font-weight: bold; position: absolute; top:330px}
 
-
+#bbajoimg1 {position: absolute; top:300px; left:60px}
+#bbajoimg2 {position: absolute; top:300px; left:160px}
+#bbajoimg3 {position: absolute; top:300px; left:260px}
 </style>
 
 </head>
@@ -146,15 +148,15 @@
 		<!-- eleccion nivel- aprender IU-002 -->
   	<div id="aprender" style= "visibility:hidden">
 		    <div id="lecciones">
-			      <button class="button button-full button-assertive" onclick="mostrar('catalogo0','aprender')"> PRINCIPIANTE </button>
+			      <button class="button button-full button-assertive" onclick="mostrar('catalogo0','aprender');fondoLibro()"> PRINCIPIANTE </button>
 
-			      <button  class="button button-full button-energized" onclick="mostrar('catalogo0','aprender')" >  PRINCIPIANTE SUPERIOR </button>
+			      <button  class="button button-full button-energized" onclick="mostrar('catalogo0','aprender');fondoLibro()" >  PRINCIPIANTE SUPERIOR </button>
 
-			      <button  class="button button-full button-balanced" onclick="mostrar('catalogo0','aprender')" >  INTERMEDIO </button>
+			      <button  class="button button-full button-balanced" onclick="mostrar('catalogo0','aprender');fondoLibro()" >  INTERMEDIO </button>
 
-		        <button  class="button button-full button-positive" onclick="mostrar('catalogo0','aprender')" >  INTERMEDIO SUPERIOR </button>
+		        <button  class="button button-full button-positive" onclick="mostrar('catalogo0','aprender');fondoLibro()" >  INTERMEDIO SUPERIOR </button>
 
-		        <button class="button button-full button-royal" onclick="mostrar('catalogo0','aprender')" >  AVANZADO </button>
+		        <button class="button button-full button-royal" onclick="mostrar('catalogo0','aprender');fondoLibro()" >  AVANZADO </button>
 		    </div>
 
         <div id="bsalir">
@@ -432,9 +434,33 @@
     <!-- nivel 3-->
     <div id="nivel3" style= "visibility:hidden">
 
-      <div id="imgleft"  > <img id="img31" src="img\caballo.png" width="100px" height="100px" style="border:blue 3px outset;"></div>
-      <div id="imgcenter"> <img id="img32" src="img\gato.jpg" width="100px" height="100px"></div>
-      <div id="imgright" > <img id="img33" src="img\perro.jpg" width="100px" height="100px"></div>
+      <div id="imgleft"  > <img id="img31" src="img\caballo.png" width="100px" height="100px" style="border:blue 3px outset;" alt="HORSE"></div>
+      <div id="imgcenter"> <img id="img32" src="img\gato.jpg" width="100px" height="100px" alt="CAT"></div>
+      <div id="imgright" > <img id="img33" src="img\perro.jpg" width="100px" height="100px" alt="DOG"></div>
+
+      <div id="bbajoimg1">
+      <button id=bbi31 style="border:black dashed;background:transparent;width:90px; height:45px">   </button>
+      </div>
+
+          <div id="rtaoculta31" style= "display:none; position: absolute; top:300px; left:60px">
+            <button id="brtaelegida31" class="button  button-energized"></button>
+          </div>
+
+      <div id="bbajoimg2">
+      <button id=bbi32 style="border:black dashed;background:transparent;width:90px; height:45px">   </button>
+      </div>
+
+          <div id="rtaoculta32" style= "display:none; position: absolute; top:300px; left:160px">
+            <button id="brtaelegida32" class="button  button-energized"></button>
+          </div>
+
+      <div id="bbajoimg3">
+      <button id=bbi33 style="border:black dashed;background:transparent;width:90px; height:45px">   </button>
+      </div>
+
+          <div id="rtaoculta33" style= "display:none; position: absolute; top:300px; left:260px">
+            <button id="brtaelegida33" class="button  button-energized"></button>
+          </div>
 
       <div id="brta1">
       <button id=b31 class="button  button-energized" onclick="validacionNivelTres('b31')" value="DOG">   DOG  </button>
@@ -659,86 +685,84 @@ function validacionNivelDos(button){
 }
 
 function validacionNivelTres(button){
-  borrar();
-  rtaCorrecta[1] = "HORSE";  //Cuando se carga el ejercicio se cargara esta rta, asi que esta  linea se debe borrar
-  rtaCorrecta[2] = "CAT"; //Cuando se carga el ejercicio se cargara esta rta, asi que esta  linea se debe borrar
-  rtaCorrecta[3] = "DOG";  //Cuando se carga el ejercicio se cargara esta rta, asi que esta  linea se debe borrar
-  var rtaSeleccionada;
 
-  if( flag4 == 8){
-    if (flagCheck == 2){
-      rtaSeleccionada = seleccionNivelTresSecundaria(button,flag,rtaCorrecta);
-    }else {
-      rtaSeleccionada = seleccionNivelTresSecundaria(button,flag,rtaCorrecta);
-      flag = rtaSeleccionada.flag;
-    }
-    flagCheck++;
-  }else{
-    rtaSeleccionada = seleccionNivelTresInicial(button);
-  }
+  if(flagCheck == 0){
 
+//Apago boton clickeado y borde punteado
+    document.getElementById("bbi31").style.border="solid transparent";
+    document.getElementById(button).style.display="none";
+//Guardo los valores a comparar para validar respuesta
+    var rtaNivelTres= document.getElementById(button).value;
+    var imagenvalue= document.getElementById("img31").alt;
+//Prendo boton oculto y modifico atributos
+    document.getElementById("brtaelegida31").textContent= rtaNivelTres;
 
-  if( flagCheck == 3 ){
-
-      var rtaUsuario = rtaSeleccionada.rta1;
-      var n1 =rtaUsuario.localeCompare(rtaCorrecta[1]);
-        if( n1 != 0){
-          document.getElementById("img31").style.border="outset red";
-          document.getElementById(rtaSeleccionada.brta1).style.border="outset red";
-          document.getElementById(rtaSeleccionada.brta1).disabled = false;
-        }else{
-          document.getElementById("img31").style.border="outset green";
-    //      document.getElementById(rtaSeleccionada.brta1).style.border="outset green";
-        }
-
-      rtaUsuario = rtaSeleccionada.rta2;
-      var n2 =rtaUsuario.localeCompare(rtaCorrecta[2]);
-       if( n2 != 0){
-         document.getElementById("img32").style.border="outset red";
-         document.getElementById(rtaSeleccionada.brta2).style.border="outset red";
-         document.getElementById(rtaSeleccionada.brta2).disabled = false;
-       }else{
-         document.getElementById("img32").style.border="outset green";
-    //     document.getElementById(rtaSeleccionada.brta2).style.border="outset green";
-       }
-
-       rtaUsuario = rtaSeleccionada.rta3;
-       var n3 =rtaUsuario.localeCompare(rtaCorrecta[3]);
-        if( n3 != 0){
-          document.getElementById("img33").style.border="outset red";
-          document.getElementById(rtaSeleccionada.brta3).style.border="outset red";
-          document.getElementById(rtaSeleccionada.brta3).disabled = false;
-        }else{
-          document.getElementById("img33").style.border="outset green";
-//          document.getElementById(rtaSeleccionada.brta3).style.border="outset green";
-  }
-
-  var e1 = Math.abs(n1);
-  var e2 = Math.abs(n2);
-  var e3 = Math.abs(n3);
-  var suma = e1 +  e2 + e3;
-
-       switch(suma) {
-       case 0:
+    document.getElementById("rtaoculta31").style.display = "block";
+//Compruebo respuesta
+    var n =rtaNivelTres.localeCompare(imagenvalue);
+    if( n != 0 ){
+        musicplay("soundincorrecto");
+        document.getElementById("brtaelegida31").style.border= "outset red";
+          window.setTimeout(function(){
+                    document.getElementById(button).style.display="block";
+                    document.getElementById("rtaoculta31").style.display = "none";
+                    document.getElementById("bbi31").style.border="dashed black";
+           },1400);
+    }else{
+          document.getElementById("brtaelegida31").style.border= "outset blue";
+          document.getElementById("img32").style.border="outset magenta";
+          document.getElementById("brtaelegida31").disabled='disabled';
           musicplay("soundcorrecto");
-          document.getElementById("correcto").innerHTML='¡Muy bien!';
-          alert('Siguiente Item');
-          break;
-       case 2:
-          musicplay("soundincorrecto");
-          document.getElementById("incorrecto").innerHTML='Intentalo de nuevo';
-          window.setTimeout("borrar()",3000);
-          flag = seleccionDosErrores(e1,e2,e3);
-          flag4 = 8;
-          flagCheck = 1;
-          break;
-       default:
-          musicplay("soundincorrecto");
-          document.getElementById("incorrecto").innerHTML='Intentalo de nuevo';
-          window.setTimeout("activarBotones()",4000);
-          flagCheck = 0;
-     } //switch
-   }
+          flagCheck++;
+    }
+  }else{
+    if(flagCheck == 1){
+
+      //Apago boton clickeado y borde punteado
+          document.getElementById("bbi32").style.border="solid transparent";
+          document.getElementById(button).style.display="none";
+      //Guardo los valores a comparar para validar respuesta
+          var rtaNivelTres= document.getElementById(button).value;
+          var imagenvalue= document.getElementById("img32").alt;
+      //Prendo boton oculto y modifico atributos
+          document.getElementById("brtaelegida32").textContent= rtaNivelTres;
+
+          document.getElementById("rtaoculta32").style.display = "block";
+      //Compruebo respuesta
+          var n =rtaNivelTres.localeCompare(imagenvalue);
+          if( n != 0 ){
+                musicplay("soundincorrecto");
+                document.getElementById("brtaelegida32").style.border= "outset red";
+                window.setTimeout(function(){
+                          document.getElementById(button).style.display="block";
+                          document.getElementById("rtaoculta32").style.display = "none";
+                          document.getElementById("bbi32").style.border="dashed black";
+                 },1400);
+          }else{
+                document.getElementById("brtaelegida32").style.border= "outset magenta";
+                document.getElementById("img33").style.border="outset OrangeRed";
+                document.getElementById("brtaelegida32").disabled='disabled';
+                musicplay("soundcorrecto");
+                flagCheck++;
+          }
+
+    }else{
+
+            //Apago boton clickeado y borde punteado
+                document.getElementById("bbi33").style.border="solid transparent";
+                document.getElementById(button).style.display="none";
+            //Prendo boton oculto y modifico atributos
+                var rtaNivelTres= document.getElementById(button).value;
+                document.getElementById("brtaelegida33").textContent= rtaNivelTres;
+                document.getElementById("brtaelegida33").style.border= "outset OrangeRed";
+                document.getElementById("rtaoculta33").style.display = "block";
+            //Todo salio correcto
+                document.getElementById("brtaelegida33").disabled='disabled';
+                musicplay("soundcorrecto");
+                document.getElementById("correcto").innerHTML='¡Muy bien!';
+                botonesVerdes();
+    }
+  }
 }
 
 function validacionNivelCuatro(button){
@@ -795,91 +819,18 @@ function seleccionNivelTresInicial(button) {
   return seleccion;
 }
 
-function seleccionNivelTresSecundaria(button, flag, rtaOk) {
 
 
-
-  switch (flag){
-    case 2:
-      document.getElementById(button).style.border="outset magenta";
-      document.getElementById(button).disabled='disabled';
-      seleccion.rta2 = document.getElementById(button).value;
-      seleccion.brta2 = button;
-      break;
-    case 21:
-      seleccion = {rta1:" ", brta1:" ", rta2:" ", brta2:" ", rta3:" ", brta3:" ",flag:0 };
-      document.getElementById(button).style.border="outset blue";
-      document.getElementById("img32").style.border="outset magenta";
-      document.getElementById(button).disabled='disabled';
-      seleccion.rta1 = document.getElementById(button).value;
-      seleccion.brta1 = button;
-      seleccion.rta3 = rtaOk[3];
-      seleccion.flag = 2;
-      break;
-    case 23:
-      seleccion = {rta1:" ", brta1:" ", rta2:" ", brta2:" ", rta3:" ", brta3:" ",flag:0 };
-      document.getElementById(button).style.border="outset blue";
-      document.getElementById("img33").style.border="outset magenta";
-      document.getElementById(button).disabled='disabled';
-      seleccion.rta2 = document.getElementById(button).value;
-      seleccion.brta2 = button;
-      seleccion.rta1 = rtaOk[1];
-      seleccion.flag = 11;
-      break;
-    case 31:
-      seleccion = {rta1:" ", brta1:" ", rta2:" ", brta2:" ", rta3:" ", brta3:" ",flag:0 };
-      document.getElementById(button).style.border="outset blue";
-      document.getElementById("img33").style.border="outset magenta";
-      document.getElementById(button).disabled='disabled';
-      seleccion.rta1 = document.getElementById(button).value;
-      seleccion.brta1 = button;
-      seleccion.rta2 = rtaOk[2];
-      seleccion.flag = 11;
-      break;
-    default:
-      document.getElementById(button).style.border="outset magenta";
-      document.getElementById(button).disabled='disabled';
-      seleccion.rta3 = document.getElementById(button).value;
-      seleccion.brta3 = button;
-    }
-
-  return seleccion;
-}
-
-function activarBotones(){
-     document.getElementById("img31").style.border="outset blue";
-     document.getElementById("img32").style.border="transparent";
-     document.getElementById("img33").style.border="transparent";
-     document.getElementById("b31").style.border="transparent";
-     document.getElementById("b32").style.border="transparent";
-     document.getElementById("b33").style.border="transparent";
+function botonesVerdes(){
+     document.getElementById("img31").style.border="outset green";
+     document.getElementById("img32").style.border="outset green";
+     document.getElementById("img33").style.border="outset green";
+     document.getElementById("brtaelegida31").style.border="outset green";
+     document.getElementById("brtaelegida32").style.border="outset green";
+     document.getElementById("brtaelegida33").style.border="outset green";
      borrar();
 }
 
-function seleccionDosErrores(error1,error2,error3){
-
-  rtasNuevas = 0;
-
-  document.getElementById("b31").style.border="transparent";
-  document.getElementById("b32").style.border="transparent";
-  document.getElementById("b33").style.border="transparent";
-
-  if(error1 == 1){
-     document.getElementById("img31").style.border="outset blue";
-     if (error3 == 1){
-           document.getElementById("img33").style.border="transparent";
-           rtasNuevas = 31;
-         }else {
-           document.getElementById("img32").style.border="transparent";
-           rtasNuevas = 21;
-         }
-  }else{
-      document.getElementById("img32").style.border="outset blue";
-      document.getElementById("img33").style.border="transparent";
-      rtasNuevas = 23;
-  }
-  return rtasNuevas;
-}
 
 function mostrar(nivel,llamo){
     document.getElementById(llamo).style.visibility="hidden";
@@ -937,6 +888,31 @@ function siguienteItem(){
 
 }
 
+function fondoLibro(){
+//  document.getElementById("bg").src="img/librofondo.jpg";
+  function bgadj(){
+
+    var element = document.getElementById("bg");
+
+    var ratio =  element.width / element.height;
+
+    if ((window.innerWidth / window.innerHeight) < ratio){
+      element.style.width = 'auto';
+//  			element.style.height = '100%';
+    }
+    else{
+      element.style.width = '100%';
+      element.style.height = 'auto';
+      element.style.left = '0';
+    }
+  }
+//llamo a la función bgadj() por primera vez al terminar de cargar la página
+  bgadj();
+//vuelvo a llamar a la función  bgadj() al redimensionar la ventana
+  window.onresize = function() {
+    bgadj();
+  }
+}
 
     </script>
 	</ion-pane>
